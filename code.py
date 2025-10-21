@@ -15,7 +15,7 @@ class User:
 
 users = {}
 
-bot = TeleBot("8462231489:AAEAypnU5xkumFVnCh2QiGBw7zdZJGEGvw4", skip_pending=True)
+bot = TeleBot("", skip_pending=True)
 
 @bot.message_handler(commands=["start"])
 def start(m, res=False):
