@@ -48,7 +48,7 @@ questions = [
      Question(id=5, quest="quest 5", var1="id 5 var 1", var2="id 5 ver 2", var3="id 5 var 3", var4="correct id 5 var 4", correct_var="correct id 5 var 4"),
 ]
 questions_count = 5
-bot = TeleBot("8462231489:AAEAypnU5xkumFVnCh2QiGBw7zdZJGEGvw4", skip_pending=True)
+bot = TeleBot("", skip_pending=True)
 
 symbols = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '₽', '$', '#', '%']
 def replace_decode(s):
