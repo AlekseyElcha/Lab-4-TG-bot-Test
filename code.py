@@ -99,17 +99,17 @@ def show_test1(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#1. " + question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test1)
 
 @bot.message_handler(content_types=["text"])
 def check_test1(message):
     user_id = message.from_user.id
     user = users[user_id]
-    user_answer = message.text
+    user_answer = replace_decode(message.text)
     question_id = users[user_id].question1
     question = questions[question_id - 1]
-    correct_answer = question.correct_var
+    correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
         user.test1 = 1
         users[user_id] = user
@@ -136,17 +136,17 @@ def show_test2(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#2. " +question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test2)
 
 @bot.message_handler(content_types=["text"])
 def check_test2(message):
     user_id = message.from_user.id
     user = users[user_id]
-    user_answer = message.text
+    user_answer = replace_decode(message.text)
     question_id = users[user_id].question2
     question = questions[question_id - 1]
-    correct_answer = question.correct_var
+    correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
         bot.send_message(message.chat.id, "Правильно!")
         user.test2 = 1
@@ -173,7 +173,7 @@ def show_test3(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#3. " +question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test3)
 
 
@@ -181,10 +181,10 @@ def show_test3(message):
 def check_test3(message):
     user_id = message.from_user.id
     user = users[user_id]
-    user_answer = message.text
+    user_answer = replace_decode(message.text)
     question_id = users[user_id].question3
     question = questions[question_id - 1]
-    correct_answer = question.correct_var
+    correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
         user.test3 = 1
         users[user_id] = user
@@ -211,17 +211,17 @@ def show_test4(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#4. " +question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test4)
 
 @bot.message_handler(content_types=["text"])
 def check_test4(message):
     user_id = message.from_user.id
     user = users[user_id]
-    user_answer = message.text
+    user_answer = replace_decode(message.text)
     question_id = users[user_id].question4
     question = questions[question_id - 1]
-    correct_answer = question.correct_var
+    correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
         user.test4 = 1
         users[user_id] = user
@@ -247,17 +247,17 @@ def show_test5(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#5. " + question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test5)
 
 @bot.message_handler(content_types=["text"])
 def check_test5(message):
     user_id = message.from_user.id
     user = users[user_id]
-    user_answer = message.text
+    user_answer = replace_decode(message.text)
     question_id = users[user_id].question5
     question = questions[question_id - 1]
-    correct_answer = question.correct_var
+    correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
         user.test5 = 1
         users[user_id] = user
@@ -275,9 +275,19 @@ def result(message):
     t1 = datetime.today()
     users[user_id].end_time = t1
     total_points = user.sum_point(user.test1, user.test2, user.test3, user.test4, user.test5)
+    percent = total_points / questions_count * 100
+    if percent > 75:
+        result_message = "Отличный результат! Высокий уровень понимания темы! Так держать!"
+    elif percent <= 75 and percent > 50:
+        result_message = "Неплохо! Ошибки есть, но это поправимо. Советуем ещё поизучать теорию, знания лишними не бывают:)"
+    elif percent > 20 and percent <= 50:
+        result_message = "Что-то правильно - уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
+    else:
+        result_message = "Маловато баллов... Но если поработать с нашими материалами, низкий балл останется в прошлом!"
     bot.send_message(message.chat.id, f"Тест пройден!\n"
-                    f"\nНабрано {total_points}/{questions_count} ({total_points / questions_count * 100}%)\n"
-                    f"Затраченное время: {user.time_spent_on_test(user.start_time, user.end_time)}\n"
+                    f"\nНабрано {total_points}/{questions_count} ({percent}%)\n"
+                    f"Затраченное время: {user.time_spent_on_test(user.start_time, user.end_time)}\n\n"
+                    f"{result_message}\n\n"
                     f"Для повторного прохождения нажмите /start",
                      reply_markup=types.ReplyKeyboardRemove())
     us_test1 = user.test1
