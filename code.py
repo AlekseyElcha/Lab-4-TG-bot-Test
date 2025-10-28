@@ -1,5 +1,7 @@
 # pip install telebot==0.0.5
+# pip install dataclasses==0.8
 from telebot import *
+from time import sleep
 from dataclasses import *
 from random import shuffle
 from datetime import datetime
@@ -50,6 +52,7 @@ questions = [
 questions_count = 5
 bot = TeleBot("", skip_pending=True)
 
+
 symbols = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '₽', '$', '#', '%']
 def replace_decode(s):
     t = [i for i in s if i not in symbols]
@@ -83,6 +86,7 @@ def get_name1(message):
     bot.send_message(message.chat.id, "Отличный ник! Приступаем к тесту!")
     show_test1(message)
 
+
 @bot.message_handler(content_types=["text"])
 def show_test1(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
@@ -113,9 +117,23 @@ def check_test1(message):
     if user_answer == correct_answer:
         user.test1 = 1
         users[user_id] = user
-        bot.send_message(message.chat.id, "Верно!")
+        bot.send_message(message.chat.id, "Правильно!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
         bot.send_message(message.chat.id, "Ответ неверный, к сожалению:(")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test2(message)
 
@@ -136,7 +154,7 @@ def show_test2(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, "#2. " +question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#2. " + question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test2)
 
 @bot.message_handler(content_types=["text"])
@@ -148,11 +166,25 @@ def check_test2(message):
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
-        bot.send_message(message.chat.id, "Правильно!")
+        bot.send_message(message.chat.id, "Верно!")
         user.test2 = 1
         users[user_id] = user
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Упс, ответ неверный:(")
+        bot.send_message(message.chat.id, "Неправильно:(")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test3(message)
 
@@ -189,8 +221,22 @@ def check_test3(message):
         user.test3 = 1
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Ой, ошибочка в ответе...")
+        bot.send_message(message.chat.id, "Эх, ошибка...")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test4(message)
 
@@ -226,8 +272,22 @@ def check_test4(message):
         user.test4 = 1
         users[user_id] = user
         bot.send_message(message.chat.id, "Ура! Верный ответ!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Эх, не тот вариант был выбран...")
+        bot.send_message(message.chat.id, "Неа, неверно...")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test5(message)
 
@@ -262,8 +322,22 @@ def check_test5(message):
         user.test5 = 1
         users[user_id] = user
         bot.send_message(message.chat.id, "Это успех!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Неа, неправильно:(")
+        bot.send_message(message.chat.id, "Неправильный ответ:(")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     result(message)
 
