@@ -50,7 +50,10 @@ questions = [
      Question(id=5, quest="quest 5", var1="id 5 var 1", var2="id 5 ver 2", var3="id 5 var 3", var4="correct id 5 var 4", correct_var="correct id 5 var 4"),
 ]
 questions_count = 5
+
 bot = TeleBot("", skip_pending=True)
+group_id = -5078749266
+
 
 
 symbols = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '₽', '$', '#', '%']
@@ -342,8 +345,7 @@ def check_test5(message):
     result(message)
 
 def result(message):
-    global questions_count
-    # DATA_FILE = open(r"C:\Users\alesh\OneDrive\Desktop\test_data.txt", "w+")
+    global questions_count, group_id
     user_id = message.from_user.id
     user = users[user_id]
     t1 = datetime.today()
@@ -355,7 +357,7 @@ def result(message):
     elif percent <= 75 and percent > 50:
         result_message = "Неплохо! Ошибки есть, но это поправимо. Советуем ещё поизучать теорию, знания лишними не бывают:)"
     elif percent > 20 and percent <= 50:
-        result_message = "Что-то правильно - уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
+        result_message = "Что-то правильно - это уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
     else:
         result_message = "Маловато баллов... Но если поработать с нашими материалами, низкий балл останется в прошлом!"
     bot.send_message(message.chat.id, f"Тест пройден!\n"
@@ -369,10 +371,25 @@ def result(message):
     us_test3 = user.test3
     us_test4 = user.test4
     us_test5 = user.test5
+    us_time = user.time_spent_on_test(user.start_time, user.end_time)
     del user
-    # DATA_FILE.write("User: " + str(user_id) + ", #1: " + str(us_test1) + ", #2: " + str(us_test2) + ", #3: " + str(us_test3) + ", #4: " + str(us_test4) + ", #5: " + str(us_test5) + ", sum: " + str(total_points))
     print(f"{user_id}, Тест пройден! Сумма баллов - {total_points}")
-    # DATA_FILE.close()
+    bot.send_message(group_id, f"Информация о прохожждении теста"
+                               f"--------------------------------------"
+                               f"*Имя пользователя*: {user.name}\n"
+                               f"*ID*: {user.tg_id}\n"
+                               f"--------------------------------------"
+                               f"*Суммарный результат:* {user.sum_points(us_test1, us_test2, us_test3, us_test4, us_test5)}/{questions_count}\n"
+                               f"*Процент выполнения теста:* {percent}%\n"
+                               f"*Затраченное время:* {us_time}\n"
+                               f"--------------------------------------"
+                               f"*Подробная статистика по каждому ответу:*\n"
+                               f"*Вопрос #1:* {us_test1}"
+                               f"*Вопрос #2:* {us_test2}"
+                               f"*Вопрос #3:* {us_test3}"
+                               f"*Вопрос #4:* {us_test4}"
+                               f"*Вопрос #5:* {us_test5}", parse_mode="Markdown"
+                     )
 
 
 if __name__ == "__main__":
