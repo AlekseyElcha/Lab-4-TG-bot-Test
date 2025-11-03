@@ -2,7 +2,7 @@
 # pip install dataclasses==0.8
 from telebot import *
 from time import sleep
-from dataclasses import *
+from dataclasses import dataclass
 from random import shuffle
 from datetime import datetime
 
@@ -22,13 +22,29 @@ class User:
     question5: int
     start_time: datetime
     end_time: datetime
-    @classmethod
-    def sum_point(cls, test1, test2, test3, test4, test5) -> int:
-        return test1 + test2 + test3 + test4 + test5
 
-    @classmethod
-    def time_spent_on_test(cls, start_time, end_time) -> str:
-        return str(end_time - start_time)[:-7]
+    def sum_points(self) -> int:
+        return self.test1 + self.test2 + self.test3 + self.test4 + self.test5
+
+    def time_spent_on_test(self) -> str:
+        return str(self.end_time - self.start_time)[:-7]
+
+    def calculate_percentage(self) -> int:
+        return round(self.sum_points()/questions_count * 100)
+
+    def create_result_message(self) -> str:
+        if self.calculate_percentage() == 100:
+            result_message = "Вау! Максимум!!! Поздавляем с успешным освеоением материала!"
+        elif self.calculate_percentage() > 75:
+            result_message = "Хороший результат! Высокий уровень осознания материала! Так держать!"
+        elif self.calculate_percentage() <= 75 and self.calculate_percentage() > 50:
+            result_message = "Неплохо! Ошибки есть, но это поправимо. Советуем ещё внимательно изучить теорию, знания лишними не бывают:)"
+        elif self.calculate_percentage() > 20 and self.calculate_percentage() <= 50:
+            result_message = "Что-то правильно - это уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
+        else:
+            result_message = "Маловато баллов... Но если поработать с нашими материалами, низкий балл останется в прошлом!"
+        return result_message
+
 
 @dataclass
 class Question:
@@ -83,7 +99,7 @@ def get_name1(message):
     user = User(
         name=user_name, tg_id=user_id,
         test1=0, test2=0, test3=0, test4=0, test5=0,
-        question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4], start_time=t0, end_time=t0
+        question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4], start_time=t0, end_time=t0,
     )
     users[user_id] = user
     bot.send_message(message.chat.id, "Отличный ник! Приступаем к тесту!")
@@ -350,46 +366,31 @@ def result(message):
     user = users[user_id]
     t1 = datetime.today()
     users[user_id].end_time = t1
-    total_points = user.sum_point(user.test1, user.test2, user.test3, user.test4, user.test5)
-    percent = total_points / questions_count * 100
-    if percent > 75:
-        result_message = "Отличный результат! Высокий уровень понимания темы! Так держать!"
-    elif percent <= 75 and percent > 50:
-        result_message = "Неплохо! Ошибки есть, но это поправимо. Советуем ещё поизучать теорию, знания лишними не бывают:)"
-    elif percent > 20 and percent <= 50:
-        result_message = "Что-то правильно - это уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
-    else:
-        result_message = "Маловато баллов... Но если поработать с нашими материалами, низкий балл останется в прошлом!"
     bot.send_message(message.chat.id, f"Тест пройден!\n"
-                    f"\nНабрано {total_points}/{questions_count} ({percent}%)\n"
-                    f"Затраченное время: {user.time_spent_on_test(user.start_time, user.end_time)}\n\n"
-                    f"{result_message}\n\n"
+                    f"\nНабрано {user.sum_points()}/{questions_count} ({user.calculate_percentage()}%)\n"
+                    f"Затраченное время: {user.time_spent_on_test()}\n\n"
+                    f"{user.create_result_message()}\n\n"
                     f"Для повторного прохождения нажмите /start",
                      reply_markup=types.ReplyKeyboardRemove())
-    us_test1 = user.test1
-    us_test2 = user.test2
-    us_test3 = user.test3
-    us_test4 = user.test4
-    us_test5 = user.test5
-    us_time = user.time_spent_on_test(user.start_time, user.end_time)
-    del user
-    print(f"{user_id}, Тест пройден! Сумма баллов - {total_points}")
-    bot.send_message(group_id, f"Информация о прохожждении теста"
-                               f"--------------------------------------"
+
+    print(f"{user_id}, Тест пройден! Сумма баллов - {user.sum_points}")
+    bot.send_message(group_id, f"Информация о прохожждении теста\n"
+                               f"--------------------------------------\n"
                                f"*Имя пользователя*: {user.name}\n"
                                f"*ID*: {user.tg_id}\n"
-                               f"--------------------------------------"
-                               f"*Суммарный результат:* {user.sum_points(us_test1, us_test2, us_test3, us_test4, us_test5)}/{questions_count}\n"
-                               f"*Процент выполнения теста:* {percent}%\n"
-                               f"*Затраченное время:* {us_time}\n"
-                               f"--------------------------------------"
+                               f"--------------------------------------\n"
+                               f"*Суммарный результат:* {user.sum_points()}/{questions_count}\n"
+                               f"*Процент выполнения теста:* {user.calculate_percentage()}%\n"
+                               f"*Затраченное время:* {user.time_spent_on_test()}\n"
+                               f"--------------------------------------\n"
                                f"*Подробная статистика по каждому ответу:*\n"
-                               f"*Вопрос #1:* {us_test1}"
-                               f"*Вопрос #2:* {us_test2}"
-                               f"*Вопрос #3:* {us_test3}"
-                               f"*Вопрос #4:* {us_test4}"
-                               f"*Вопрос #5:* {us_test5}", parse_mode="Markdown"
+                               f"*Вопрос #1:* {user.test1}\n"
+                               f"*Вопрос #2:* {user.test2}\n"
+                               f"*Вопрос #3:* {user.test3}\n"
+                               f"*Вопрос #4:* {user.test4}\n"
+                               f"*Вопрос #5:* {user.test5}\n", parse_mode="Markdown"
                      )
+    del user
 
 
 if __name__ == "__main__":
