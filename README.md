@@ -10,7 +10,7 @@ The test measures the time from start till finish (visible both for users and ad
 After finishing the test users get info:
 - the number of points they got;
 - percentage of their correct answers
-- tiem spent on test;
+- time spent on test;
 
 Admins also see:
 - users TG id, Nickname for the test;
