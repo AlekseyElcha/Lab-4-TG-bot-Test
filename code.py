@@ -34,7 +34,7 @@ class User:
 
     def create_result_message(self) -> str:
         if self.calculate_percentage() == 100:
-            result_message = "Вау! Максимум!!! Поздавляем с успешным освеоением материала!"
+            result_message = "Вау! Максимум!!! Поздравляем с успешным освеоением материала!"
         elif self.calculate_percentage() > 75:
             result_message = "Хороший результат! Высокий уровень осознания материала! Так держать!"
         elif self.calculate_percentage() <= 75 and self.calculate_percentage() > 50:
