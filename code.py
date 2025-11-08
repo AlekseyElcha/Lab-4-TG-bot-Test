@@ -10,6 +10,7 @@ from datetime import datetime
 class User:
     name: str
     tg_id: int
+    tg_username: str
     test1: int
     test2: int
     test3: int
@@ -70,8 +71,6 @@ questions_count = 5
 bot = TeleBot("", skip_pending=True)
 group_id = -5078749266
 
-
-
 symbols = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '₽', '$', '#', '%']
 def replace_decode(s):
     t = [i for i in s if i not in symbols]
@@ -91,17 +90,15 @@ def start(m, res=False):
 
 @bot.message_handler(content_types=["text"])
 def get_name1(message):
-    user_id = message.from_user.id
-    user_name = replace_decode(message.text)
     var = [1, 2, 3, 4, 5]
     shuffle(var)
     t0 = datetime.today()
     user = User(
-        name=user_name, tg_id=user_id,
+        name=replace_decode(message.text), tg_id=message.from_user.id, tg_username=message.from_user.username,
         test1=0, test2=0, test3=0, test4=0, test5=0,
-        question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4], start_time=t0, end_time=t0,
+        question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4], start_time=t0, end_time=t0
     )
-    users[user_id] = user
+    users[message.from_user.id] = user
     bot.send_message(message.chat.id, "Отличный ник! Приступаем к тесту!")
     show_test1(message)
 
@@ -376,7 +373,8 @@ def result(message):
     print(f"{user_id}, Тест пройден! Сумма баллов - {user.sum_points}")
     bot.send_message(group_id, f"Информация о прохожждении теста\n"
                                f"--------------------------------------\n"
-                               f"*Имя пользователя*: {user.name}\n"
+                               f"*Ник пользователя*: {user.name}\n"
+                               f"*Username*: {user.username}\n"
                                f"*ID*: {user.tg_id}\n"
                                f"--------------------------------------\n"
                                f"*Суммарный результат:* {user.sum_points()}/{questions_count}\n"
