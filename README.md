@@ -13,6 +13,6 @@ After finishing the test users get info:
 - time spent on test;
 
 Admins also see:
-- users TG id, Nickname for the test;
+- users TG id, TG username, nickname for the test;
 - time spent on test;
 - list with the fact - user answered correctly or not for each of the questions?
