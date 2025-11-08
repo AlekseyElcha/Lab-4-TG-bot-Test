@@ -2,7 +2,7 @@ This bot was created for Lab-4 (Group 4) on Сomputing Machines, Networks and Sy
 
 Language: Python + Telebot module
 
-The test itself consists of multiple question with four choices with only one correct. Each correct answer gives +1 point, incorrect does not give or take anything.
+The test itself consists of multiple questions with four choices with only one correct. Each correct answer gives +1 point, incorrect does not give or take anything.
 The questions/choices sequence is randomized for each user.
 
 The test measures the time from start till finish (visible both for users and admins).
