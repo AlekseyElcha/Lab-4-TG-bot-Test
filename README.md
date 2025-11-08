@@ -1,4 +1,4 @@
-This bot was created for Lab-4 (Group 5) on Сomputing Machines, Networks and Systems discipline at NUST MISIS.
+This bot was created for Lab-4 (Group 4) on Сomputing Machines, Networks and Systems discipline at NUST MISIS.
 
 Language: Python + Telebot module
 
