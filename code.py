@@ -1,6 +1,8 @@
 # pip install telebot==0.0.5
+# pip install dataclasses==0.8
 from telebot import *
-from dataclasses import *
+from time import sleep
+from dataclasses import dataclass
 from random import shuffle
 from datetime import datetime
 
@@ -8,6 +10,7 @@ from datetime import datetime
 class User:
     name: str
     tg_id: int
+    tg_username: str
     test1: int
     test2: int
     test3: int
@@ -20,13 +23,29 @@ class User:
     question5: int
     start_time: datetime
     end_time: datetime
-    @classmethod
-    def sum_point(cls, test1, test2, test3, test4, test5) -> int:
-        return test1 + test2 + test3 + test4 + test5
 
-    @classmethod
-    def time_spent_on_test(cls, start_time, end_time) -> str:
-        return str(end_time - start_time)[:-7]
+    def sum_points(self) -> int:
+        return self.test1 + self.test2 + self.test3 + self.test4 + self.test5
+
+    def time_spent_on_test(self) -> str:
+        return str(self.end_time - self.start_time)[:-7]
+
+    def calculate_percentage(self) -> int:
+        return round(self.sum_points()/questions_count * 100)
+
+    def create_result_message(self) -> str:
+        if self.calculate_percentage() == 100:
+            result_message = "Вау! Максимум!!! Поздравляем с успешным освеоением материала!"
+        elif self.calculate_percentage() > 75:
+            result_message = "Хороший результат! Высокий уровень осознания материала! Так держать!"
+        elif self.calculate_percentage() <= 75 and self.calculate_percentage() > 50:
+            result_message = "Неплохо! Ошибки есть, но это поправимо. Советуем ещё внимательно изучить теорию, знания лишними не бывают:)"
+        elif self.calculate_percentage() > 20 and self.calculate_percentage() <= 50:
+            result_message = "Что-то правильно - это уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
+        else:
+            result_message = "Маловато баллов... Но если поработать с нашими материалами, низкий балл останется в прошлом!"
+        return result_message
+
 
 @dataclass
 class Question:
@@ -48,7 +67,9 @@ questions = [
      Question(id=5, quest="quest 5", var1="id 5 var 1", var2="id 5 ver 2", var3="id 5 var 3", var4="correct id 5 var 4", correct_var="correct id 5 var 4"),
 ]
 questions_count = 5
+
 bot = TeleBot("", skip_pending=True)
+group_id = -5078749266
 
 symbols = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '₽', '$', '#', '%']
 def replace_decode(s):
@@ -60,28 +81,28 @@ def start(m, res=False):
     global questions_count
     bot.send_message(m.chat.id, f"Добро пожаловать в тест!\n"
                                 f"Перед началом выполнения, пожалуйста, прочитайте инструкцию:\n"
+                                ff"Перед началом выполнения, пожалуйста, прочитайте инструкцию:\n"
                                 f" - Тест состоит из {questions_count} вопросов.\n"
                                 f" - К каждому вопросу Вам будет дано 4 варианта ответа.\n"
-                                f" - Выбор подходящего варианта ответа осуществляется КНОПКАМИ\n"
-                                f" - Желаем удачи!", reply_markup=types.ReplyKeyboardRemove())
+                                f" - Выбор варианта ответа осуществляется НАЖАТИЕМ КНОПКИ!\n"
+                                f" Желаем удачи!", reply_markup=types.ReplyKeyboardRemove())
     bot.send_message(m.chat.id, "Введите, пожалуйста Ваше имя (никнейм для викторины)")
     bot.register_next_step_handler(m, get_name1)
 
 @bot.message_handler(content_types=["text"])
 def get_name1(message):
-    user_id = message.from_user.id
-    user_name = replace_decode(message.text)
     var = [1, 2, 3, 4, 5]
     shuffle(var)
     t0 = datetime.today()
     user = User(
-        name=user_name, tg_id=user_id,
+        name=replace_decode(message.text), tg_id=message.from_user.id, tg_username=message.from_user.username,
         test1=0, test2=0, test3=0, test4=0, test5=0,
         question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4], start_time=t0, end_time=t0
     )
-    users[user_id] = user
+    users[message.from_user.id] = user
     bot.send_message(message.chat.id, "Отличный ник! Приступаем к тесту!")
     show_test1(message)
+
 
 @bot.message_handler(content_types=["text"])
 def show_test1(message):
@@ -113,9 +134,23 @@ def check_test1(message):
     if user_answer == correct_answer:
         user.test1 = 1
         users[user_id] = user
-        bot.send_message(message.chat.id, "Верно!")
+        bot.send_message(message.chat.id, "Правильно!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
         bot.send_message(message.chat.id, "Ответ неверный, к сожалению:(")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test2(message)
 
@@ -136,7 +171,7 @@ def show_test2(message):
     markup.add(btn2)
     markup.add(btn3)
     markup.add(btn4)
-    bot.send_message(message.chat.id, "#2. " +question.quest, reply_markup=markup)
+    bot.send_message(message.chat.id, "#2. " + question.quest, reply_markup=markup)
     bot.register_next_step_handler(message, check_test2)
 
 @bot.message_handler(content_types=["text"])
@@ -148,11 +183,25 @@ def check_test2(message):
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
-        bot.send_message(message.chat.id, "Правильно!")
+        bot.send_message(message.chat.id, "Верно!")
         user.test2 = 1
         users[user_id] = user
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Упс, ответ неверный:(")
+        bot.send_message(message.chat.id, "Неправильно:(")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test3(message)
 
@@ -189,8 +238,22 @@ def check_test3(message):
         user.test3 = 1
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Ой, ошибочка в ответе...")
+        bot.send_message(message.chat.id, "Эх, ошибка...")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test4(message)
 
@@ -226,8 +289,22 @@ def check_test4(message):
         user.test4 = 1
         users[user_id] = user
         bot.send_message(message.chat.id, "Ура! Верный ответ!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Эх, не тот вариант был выбран...")
+        bot.send_message(message.chat.id, "Неа, неверно...")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     show_test5(message)
 
@@ -262,43 +339,57 @@ def check_test5(message):
         user.test5 = 1
         users[user_id] = user
         bot.send_message(message.chat.id, "Это успех!")
+        try:
+            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     else:
-        bot.send_message(message.chat.id, "Неа, неправильно:(")
+        bot.send_message(message.chat.id, "Неправильный ответ:(")
+        try:
+            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+                sticker_msg = bot.send_sticker(message.chat.id, anim)
+                sleep(1.25)
+                bot.delete_message(message.chat.id, sticker_msg.message_id)
+        except:
+            print("Ошибка при отправке стикера")
     print(user)
     result(message)
 
 def result(message):
-    global questions_count
-    # DATA_FILE = open(r"C:\Users\alesh\OneDrive\Desktop\test_data.txt", "w+")
+    global questions_count, group_id
     user_id = message.from_user.id
     user = users[user_id]
     t1 = datetime.today()
     users[user_id].end_time = t1
-    total_points = user.sum_point(user.test1, user.test2, user.test3, user.test4, user.test5)
-    percent = total_points / questions_count * 100
-    if percent > 75:
-        result_message = "Отличный результат! Высокий уровень понимания темы! Так держать!"
-    elif percent <= 75 and percent > 50:
-        result_message = "Неплохо! Ошибки есть, но это поправимо. Советуем ещё поизучать теорию, знания лишними не бывают:)"
-    elif percent > 20 and percent <= 50:
-        result_message = "Что-то правильно - уже хорошо, но, пожалуйста, подробнее изучите наши материалы!"
-    else:
-        result_message = "Маловато баллов... Но если поработать с нашими материалами, низкий балл останется в прошлом!"
     bot.send_message(message.chat.id, f"Тест пройден!\n"
-                    f"\nНабрано {total_points}/{questions_count} ({percent}%)\n"
-                    f"Затраченное время: {user.time_spent_on_test(user.start_time, user.end_time)}\n\n"
-                    f"{result_message}\n\n"
+                    f"\nНабрано {user.sum_points()}/{questions_count} ({user.calculate_percentage()}%)\n"
+                    f"Затраченное время: {user.time_spent_on_test()}\n\n"
+                    f"{user.create_result_message()}\n\n"
                     f"Для повторного прохождения нажмите /start",
                      reply_markup=types.ReplyKeyboardRemove())
-    us_test1 = user.test1
-    us_test2 = user.test2
-    us_test3 = user.test3
-    us_test4 = user.test4
-    us_test5 = user.test5
+
+    print(f"{user_id}, Тест пройден! Сумма баллов - {user.sum_points}")
+    bot.send_message(group_id, f"Информация о прохожждении теста\n"
+                               f"--------------------------------------\n"
+                               f"*Ник пользователя*: {user.name}\n"
+                               f"*Username*: {user.username}\n"
+                               f"*ID*: {user.tg_id}\n"
+                               f"--------------------------------------\n"
+                               f"*Суммарный результат:* {user.sum_points()}/{questions_count}\n"
+                               f"*Процент выполнения теста:* {user.calculate_percentage()}%\n"
+                               f"*Затраченное время:* {user.time_spent_on_test()}\n"
+                               f"--------------------------------------\n"
+                               f"*Подробная статистика по каждому ответу:*\n"
+                               f"*Вопрос #1:* {user.test1}\n"
+                               f"*Вопрос #2:* {user.test2}\n"
+                               f"*Вопрос #3:* {user.test3}\n"
+                               f"*Вопрос #4:* {user.test4}\n"
+                               f"*Вопрос #5:* {user.test5}\n", parse_mode="Markdown"
+                     )
     del user
-    # DATA_FILE.write("User: " + str(user_id) + ", #1: " + str(us_test1) + ", #2: " + str(us_test2) + ", #3: " + str(us_test3) + ", #4: " + str(us_test4) + ", #5: " + str(us_test5) + ", sum: " + str(total_points))
-    print(f"{user_id}, Тест пройден! Сумма баллов - {total_points}")
-    # DATA_FILE.close()
 
 
 if __name__ == "__main__":
