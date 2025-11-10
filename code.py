@@ -372,7 +372,7 @@ def result(message):
                      reply_markup=types.ReplyKeyboardRemove())
 
     print(f"{user_id}, Тест пройден! Сумма баллов - {user.sum_points}")
-    bot.send_message(group_id, f"Информация о прохожждении теста\n"
+    bot.send_message(group_id, f"Информация о прохождении теста\n"
                                f"--------------------------------------\n"
                                f"*Ник пользователя*: {user.name}\n"
                                f"*Username*: {user.username}\n"
