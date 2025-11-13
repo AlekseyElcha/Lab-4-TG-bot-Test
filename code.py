@@ -112,10 +112,11 @@ def start(m, res=False):
     global questions_count
     bot.send_message(m.chat.id, f"Добро пожаловать в тест!\n"
                                 f"Перед началом выполнения, пожалуйста, прочитайте инструкцию:\n"
+                                ff"Перед началом выполнения, пожалуйста, прочитайте инструкцию:\n"
                                 f" - Тест состоит из {questions_count} вопросов.\n"
                                 f" - К каждому вопросу Вам будет дано 4 варианта ответа.\n"
-                                f" - Выбор подходящего варианта ответа осуществляется КНОПКАМИ\n"
-                                f" - Желаем удачи!", reply_markup=types.ReplyKeyboardRemove())
+                                f" - Выбор варианта ответа осуществляется НАЖАТИЕМ КНОПКИ!\n"
+                                f" Желаем удачи!", reply_markup=types.ReplyKeyboardRemove())
     bot.send_message(m.chat.id, "Введите, пожалуйста Ваше имя (никнейм для викторины)")
     bot.register_next_step_handler(m, get_name1)
 
