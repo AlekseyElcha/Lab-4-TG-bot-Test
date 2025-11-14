@@ -129,7 +129,10 @@ def get_name1(message):
         name=replace_decode(message.text), tg_id=message.from_user.id, tg_username=message.from_user.username,
         test1=0, test2=0, test3=0, test4=0, test5=0, test6=0, test7=0, test8=0,
         test9=0, test10=0, test11=0, test12=0, test13=0, test14=0, test15=0,
-        question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4], start_time=t0, end_time=t0
+        question1=var[0], question2=var[1], question3=var[2], question4=var[3], question5=var[4],
+        question6=var[5], question7=var[6], question8=var[7], question9=var[8], question10=var[9],
+        question11=var[10], question12=var[11], question13=var[12], question14=var[13], question15=var[14],
+        start_time=t0, end_time=t0
     )
     users[message.from_user.id] = user
     bot.send_message(message.chat.id, "Отличный ник! Приступаем к тесту!")
