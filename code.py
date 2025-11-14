@@ -99,8 +99,10 @@ questions = [
 ]
 questions_count = 15
 
-bot = TeleBot("", skip_pending=True)
+bot = TeleBot("8462231489:AAEAypnU5xkumFVnCh2QiGBw7zdZJGEGvw4", skip_pending=True)
 group_id = -5078749266
+
+print("Started")
 
 symbols = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!', '₽', '$', '#', '%']
 def replace_decode(s):
@@ -171,7 +173,7 @@ def check_test1(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Правильно!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -180,7 +182,7 @@ def check_test1(message):
     else:
         bot.send_message(message.chat.id, "Ответ неверный, к сожалению:(")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -222,7 +224,7 @@ def check_test2(message):
         user.test2 = 1
         users[user_id] = user
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -231,7 +233,7 @@ def check_test2(message):
     else:
         bot.send_message(message.chat.id, "Неправильно:(")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -274,7 +276,7 @@ def check_test3(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -283,7 +285,7 @@ def check_test3(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -325,7 +327,7 @@ def check_test4(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Ура! Верный ответ!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -334,7 +336,7 @@ def check_test4(message):
     else:
         bot.send_message(message.chat.id, "Неа, неверно...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -375,7 +377,7 @@ def check_test5(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -384,7 +386,7 @@ def check_test5(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -398,7 +400,7 @@ def check_test5(message):
 def show_test6(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question6
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -418,7 +420,7 @@ def check_test6(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question6
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -426,7 +428,7 @@ def check_test6(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -435,7 +437,7 @@ def check_test6(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -449,7 +451,7 @@ def check_test6(message):
 def show_test7(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question7
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -469,7 +471,7 @@ def check_test7(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question7
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -477,7 +479,7 @@ def check_test7(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -486,7 +488,7 @@ def check_test7(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -499,7 +501,7 @@ def check_test7(message):
 def show_test8(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question8
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -519,7 +521,7 @@ def check_test8(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question8
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -527,7 +529,7 @@ def check_test8(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -536,7 +538,7 @@ def check_test8(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -549,7 +551,7 @@ def check_test8(message):
 def show_test9(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question9
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -569,7 +571,7 @@ def check_test9(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question9
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -577,7 +579,7 @@ def check_test9(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -586,7 +588,7 @@ def check_test9(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -599,7 +601,7 @@ def check_test9(message):
 def show_test10(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question10
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -619,7 +621,7 @@ def check_test10(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question10
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -627,7 +629,7 @@ def check_test10(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -636,7 +638,7 @@ def check_test10(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -649,7 +651,7 @@ def check_test10(message):
 def show_test11(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question11
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -669,7 +671,7 @@ def check_test11(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question11
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -677,7 +679,7 @@ def check_test11(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -686,7 +688,7 @@ def check_test11(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -699,7 +701,7 @@ def check_test11(message):
 def show_test12(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question12
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -719,7 +721,7 @@ def check_test12(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question12
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -727,7 +729,7 @@ def check_test12(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -736,7 +738,7 @@ def check_test12(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -749,7 +751,7 @@ def check_test12(message):
 def show_test13(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question13
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -769,7 +771,7 @@ def check_test13(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question13
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -777,7 +779,7 @@ def check_test13(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -786,7 +788,7 @@ def check_test13(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -799,7 +801,7 @@ def check_test13(message):
 def show_test14(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question14
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -819,7 +821,7 @@ def check_test14(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question3
+    question_id = users[user_id].question14
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -827,7 +829,7 @@ def check_test14(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Отлично!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -836,7 +838,7 @@ def check_test14(message):
     else:
         bot.send_message(message.chat.id, "Эх, ошибка...")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -849,7 +851,7 @@ def check_test14(message):
 def show_test15(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     user_id = message.from_user.id
-    question_id = users[user_id].question5
+    question_id = users[user_id].question15
     question = questions[question_id-1]
     variants = [question.var1, question.var2, question.var3, question.var4]
     shuffle(variants)
@@ -869,7 +871,7 @@ def check_test15(message):
     user_id = message.from_user.id
     user = users[user_id]
     user_answer = replace_decode(message.text)
-    question_id = users[user_id].question5
+    question_id = users[user_id].question15
     question = questions[question_id - 1]
     correct_answer = replace_decode(question.correct_var)
     if user_answer == correct_answer:
@@ -877,7 +879,7 @@ def check_test15(message):
         users[user_id] = user
         bot.send_message(message.chat.id, "Это успех!")
         try:
-            with open(r"C:\Users\alesh\Downloads\CorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/CorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -886,7 +888,7 @@ def check_test15(message):
     else:
         bot.send_message(message.chat.id, "Неправильный ответ:(")
         try:
-            with open(r"C:\Users\alesh\Downloads\IncorrectAnimatedSticker.tgs", 'rb') as anim:
+            with open("/home/aleshus2007/IncorrectAnimatedSticker.tgs", 'rb') as anim:
                 sticker_msg = bot.send_sticker(message.chat.id, anim)
                 sleep(1.25)
                 bot.delete_message(message.chat.id, sticker_msg.message_id)
@@ -909,7 +911,7 @@ def result(message):
                      reply_markup=types.ReplyKeyboardRemove())
 
     print(f"{user_id}, Тест пройден! Сумма баллов - {user.sum_points}")
-    bot.send_message(group_id, f"Информация о прохождении теста\n"
+    bot.send_message(group_id, f"Информация о прохожждении теста\n"
                                f"--------------------------------------\n"
                                f"*Ник пользователя*: {user.name}\n"
                                f"*Username*: {user.username}\n"
